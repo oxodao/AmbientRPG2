@@ -53,4 +53,12 @@ export const useAuthStore = create<StoreType>()((set, get) => ({
 
 		return tokenUser.roles.includes(role) || tokenUser.roles.includes('ROLE_ADMIN');
 	},
+	isDm: () => {
+		const tokenUser = get().tokenUser;
+		if (!tokenUser) {
+			return false;
+		}
+
+		return tokenUser.roles.includes('ROLE_DM') || tokenUser.roles.includes('ROLE_ADMIN');
+	},
 }));

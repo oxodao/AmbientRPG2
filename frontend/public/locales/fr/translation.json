@@ -36,7 +36,7 @@
 		},
 		"oauth_login_failed": {
 			"title": "Échec de la connexion",
-			"message": "Impossible de se connecter avec Keycloak. Merci de réessayer ou de contacter votre administrateur."
+			"message": "Impossible de se connecter avec Overflow. Merci de réessayer ou de contacter votre administrateur."
 		},
 		"404": {
 			"title": "Page non trouvée",
@@ -53,8 +53,9 @@
 	},
 	"login": {
 		"title": "Connexion",
-		"invalid_credentials": "Identifiants invalides",
-		"oauth_login": "Connexion avec Keycloak"
+		"room_id": "Code Salle",
+		"join_room": "Rejoindre",
+		"oauth_login": "Connexion avec Overflow"
 	},
 	"reset_password": {
 		"title": "Vous avez oublié votre mot de passe ?",
@@ -72,7 +73,7 @@
 	},
 	"account": {
 		"my_profile": "Mon profil",
-		"locked_oauth": "Votre profil est géré par Keycloak et ne peut pas être modifié ici.",
+		"locked_oauth": "Votre profil est géré par Overflow et ne peut pas être modifié ici.",
 		"roles": "Rôles",
 		"mercure": {
 			"title": "Testeur de mises à jour en temps réel",

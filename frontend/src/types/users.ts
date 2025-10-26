@@ -4,8 +4,6 @@ export type User = {
 	email: string;
 	language: string;
 	roles: string[];
-
-	oauthLogin: boolean;
 };
 
 export type EditUser = Omit<User, 'id' | 'username' | 'roles'>;

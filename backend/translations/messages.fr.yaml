@@ -1,20 +1,5 @@
 emails:
     general:
         hello: 'Salut %username%, 👋'
-        cheers: 'Bonne journée'
-
-    forgotten_password:
-        subject: 'Demande de réinitialisation de mot de passe'
-        text1: 'Il semble que vous ayez oublié votre mot de passe et demandé à le réinitialiser'
-        link: "Changer de mot de passe"
-        warning: "Si vous n'avez pas demandé cela, merci d'ignorer cet email."
-
-    password_updated:
-        subject: 'Mot de passe mis à jour'
-        text1: 'Votre mot de passe a été modifié'
-        warning: "Si vous n'avez pas changé votre mot de passe, merci de contacter immédiatement votre administrateur AmbientRPG pour sécuriser votre compte !"
-
-    email_updated:
-        subject: 'Email modifiée'
-        text1: "Vous venez de changer votre email pour %new_email%, l'ancienne ne sera plus utilisée."
-        warning: "Si vous n'êtes pas à l'origine de cette action, merci de contacter immédiatement votre administrateur AmbientRPG pour sécuriser votre compte !"
+        cheers: 'Bonne journée,'
+        admin: 'Votre admin AmbientRPG'

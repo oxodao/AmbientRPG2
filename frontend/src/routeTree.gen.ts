@@ -12,11 +12,10 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as UnauthenticatedRouteRouteImport } from './routes/_unauthenticated/route'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
+import { Route as RoomsRoomIdRouteImport } from './routes/rooms.$roomId'
 import { Route as UnauthenticatedOauthCallbackRouteImport } from './routes/_unauthenticated/oauth-callback'
 import { Route as UnauthenticatedLoginRouteImport } from './routes/_unauthenticated/login'
-import { Route as UnauthenticatedForgottenPasswordRouteImport } from './routes/_unauthenticated/forgotten-password'
 import { Route as AuthenticatedMeRouteImport } from './routes/_authenticated/me'
-import { Route as UnauthenticatedResetPasswordCodeRouteImport } from './routes/_unauthenticated/reset-password.$code'
 
 const UnauthenticatedRouteRoute = UnauthenticatedRouteRouteImport.update({
   id: '/_unauthenticated',
@@ -31,6 +30,11 @@ const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const RoomsRoomIdRoute = RoomsRoomIdRouteImport.update({
+  id: '/rooms/$roomId',
+  path: '/rooms/$roomId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const UnauthenticatedOauthCallbackRoute =
   UnauthenticatedOauthCallbackRouteImport.update({
     id: '/oauth-callback',
@@ -42,83 +46,56 @@ const UnauthenticatedLoginRoute = UnauthenticatedLoginRouteImport.update({
   path: '/login',
   getParentRoute: () => UnauthenticatedRouteRoute,
 } as any)
-const UnauthenticatedForgottenPasswordRoute =
-  UnauthenticatedForgottenPasswordRouteImport.update({
-    id: '/forgotten-password',
-    path: '/forgotten-password',
-    getParentRoute: () => UnauthenticatedRouteRoute,
-  } as any)
 const AuthenticatedMeRoute = AuthenticatedMeRouteImport.update({
   id: '/me',
   path: '/me',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const UnauthenticatedResetPasswordCodeRoute =
-  UnauthenticatedResetPasswordCodeRouteImport.update({
-    id: '/reset-password/$code',
-    path: '/reset-password/$code',
-    getParentRoute: () => UnauthenticatedRouteRoute,
-  } as any)
 
 export interface FileRoutesByFullPath {
   '/me': typeof AuthenticatedMeRoute
-  '/forgotten-password': typeof UnauthenticatedForgottenPasswordRoute
   '/login': typeof UnauthenticatedLoginRoute
   '/oauth-callback': typeof UnauthenticatedOauthCallbackRoute
+  '/rooms/$roomId': typeof RoomsRoomIdRoute
   '/': typeof AuthenticatedIndexRoute
-  '/reset-password/$code': typeof UnauthenticatedResetPasswordCodeRoute
 }
 export interface FileRoutesByTo {
   '/me': typeof AuthenticatedMeRoute
-  '/forgotten-password': typeof UnauthenticatedForgottenPasswordRoute
   '/login': typeof UnauthenticatedLoginRoute
   '/oauth-callback': typeof UnauthenticatedOauthCallbackRoute
+  '/rooms/$roomId': typeof RoomsRoomIdRoute
   '/': typeof AuthenticatedIndexRoute
-  '/reset-password/$code': typeof UnauthenticatedResetPasswordCodeRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/_unauthenticated': typeof UnauthenticatedRouteRouteWithChildren
   '/_authenticated/me': typeof AuthenticatedMeRoute
-  '/_unauthenticated/forgotten-password': typeof UnauthenticatedForgottenPasswordRoute
   '/_unauthenticated/login': typeof UnauthenticatedLoginRoute
   '/_unauthenticated/oauth-callback': typeof UnauthenticatedOauthCallbackRoute
+  '/rooms/$roomId': typeof RoomsRoomIdRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
-  '/_unauthenticated/reset-password/$code': typeof UnauthenticatedResetPasswordCodeRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/me'
-    | '/forgotten-password'
-    | '/login'
-    | '/oauth-callback'
-    | '/'
-    | '/reset-password/$code'
+  fullPaths: '/me' | '/login' | '/oauth-callback' | '/rooms/$roomId' | '/'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/me'
-    | '/forgotten-password'
-    | '/login'
-    | '/oauth-callback'
-    | '/'
-    | '/reset-password/$code'
+  to: '/me' | '/login' | '/oauth-callback' | '/rooms/$roomId' | '/'
   id:
     | '__root__'
     | '/_authenticated'
     | '/_unauthenticated'
     | '/_authenticated/me'
-    | '/_unauthenticated/forgotten-password'
     | '/_unauthenticated/login'
     | '/_unauthenticated/oauth-callback'
+    | '/rooms/$roomId'
     | '/_authenticated/'
-    | '/_unauthenticated/reset-password/$code'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   UnauthenticatedRouteRoute: typeof UnauthenticatedRouteRouteWithChildren
+  RoomsRoomIdRoute: typeof RoomsRoomIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -144,6 +121,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/rooms/$roomId': {
+      id: '/rooms/$roomId'
+      path: '/rooms/$roomId'
+      fullPath: '/rooms/$roomId'
+      preLoaderRoute: typeof RoomsRoomIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_unauthenticated/oauth-callback': {
       id: '/_unauthenticated/oauth-callback'
       path: '/oauth-callback'
@@ -158,26 +142,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UnauthenticatedLoginRouteImport
       parentRoute: typeof UnauthenticatedRouteRoute
     }
-    '/_unauthenticated/forgotten-password': {
-      id: '/_unauthenticated/forgotten-password'
-      path: '/forgotten-password'
-      fullPath: '/forgotten-password'
-      preLoaderRoute: typeof UnauthenticatedForgottenPasswordRouteImport
-      parentRoute: typeof UnauthenticatedRouteRoute
-    }
     '/_authenticated/me': {
       id: '/_authenticated/me'
       path: '/me'
       fullPath: '/me'
       preLoaderRoute: typeof AuthenticatedMeRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_unauthenticated/reset-password/$code': {
-      id: '/_unauthenticated/reset-password/$code'
-      path: '/reset-password/$code'
-      fullPath: '/reset-password/$code'
-      preLoaderRoute: typeof UnauthenticatedResetPasswordCodeRouteImport
-      parentRoute: typeof UnauthenticatedRouteRoute
     }
   }
 }
@@ -196,17 +166,13 @@ const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
 interface UnauthenticatedRouteRouteChildren {
-  UnauthenticatedForgottenPasswordRoute: typeof UnauthenticatedForgottenPasswordRoute
   UnauthenticatedLoginRoute: typeof UnauthenticatedLoginRoute
   UnauthenticatedOauthCallbackRoute: typeof UnauthenticatedOauthCallbackRoute
-  UnauthenticatedResetPasswordCodeRoute: typeof UnauthenticatedResetPasswordCodeRoute
 }
 
 const UnauthenticatedRouteRouteChildren: UnauthenticatedRouteRouteChildren = {
-  UnauthenticatedForgottenPasswordRoute: UnauthenticatedForgottenPasswordRoute,
   UnauthenticatedLoginRoute: UnauthenticatedLoginRoute,
   UnauthenticatedOauthCallbackRoute: UnauthenticatedOauthCallbackRoute,
-  UnauthenticatedResetPasswordCodeRoute: UnauthenticatedResetPasswordCodeRoute,
 }
 
 const UnauthenticatedRouteRouteWithChildren =
@@ -215,6 +181,7 @@ const UnauthenticatedRouteRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   UnauthenticatedRouteRoute: UnauthenticatedRouteRouteWithChildren,
+  RoomsRoomIdRoute: RoomsRoomIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

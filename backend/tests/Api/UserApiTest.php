@@ -72,8 +72,6 @@ class UserApiTest extends ApiTestCase
                 'email' => ['type' => 'string'],
                 'language' => ['type' => 'string'],
                 'roles' => ['type' => 'array', 'items' => ['type' => 'string']],
-                'oauthLogin' => ['type' => 'boolean'],
-                'passwordSet' => ['type' => 'boolean'],
             ])
             ->assertResponseMatches([
                 'id' => $user->getId(),
@@ -81,8 +79,6 @@ class UserApiTest extends ApiTestCase
                 'email' => $user->getEmail(),
                 'language' => \sprintf('/api/languages/%s', $user->getLanguage()->value),
                 'roles' => $user->getRoles(),
-                'oauthLogin' => $user->isOauthLogin(),
-                'passwordSet' => $user->isPasswordSet(),
             ])
         ;
     }
@@ -98,7 +94,6 @@ class UserApiTest extends ApiTestCase
 
         // Thanks to the new autorefresh we can't do nice stuff as before...
         $oldUsername = $user->getUsername();
-        $oldPassword = $user->getPassword();
         $oldRoles = $user->getRoles();
 
         $this->browser()->actingAs($user)
@@ -107,7 +102,6 @@ class UserApiTest extends ApiTestCase
                 'json' => [
                     'username' => 'new_username',
                     'email' => 'newemail@ambientrpg.dev',
-                    'password' => 'new_password',
                     'language' => '/api/languages/fr_FR',
                     'roles' => ['ROLE_ADMIN'],
                 ],
@@ -119,8 +113,6 @@ class UserApiTest extends ApiTestCase
                 'email' => ['type' => 'string'],
                 'language' => ['type' => 'string'],
                 'roles' => ['type' => 'array', 'items' => ['type' => 'string']],
-                'oauthLogin' => ['type' => 'boolean'],
-                'passwordSet' => ['type' => 'boolean'],
             ])
             ->assertResponseMatches([
                 'id' => $user->getId(),
@@ -128,13 +120,8 @@ class UserApiTest extends ApiTestCase
                 'email' => 'newemail@ambientrpg.dev',
                 'language' => \sprintf('/api/languages/%s', Language::FRENCH->value),
                 'roles' => $oldRoles,
-                'oauthLogin' => $user->isOauthLogin(),
-                'passwordSet' => $user->isPasswordSet(),
             ])
         ;
-
-        // Password should not be change
-        self::assertEquals($oldPassword, $user->getPassword());
     }
 
     #[Test]
@@ -180,8 +167,6 @@ class UserApiTest extends ApiTestCase
                 'email' => ['type' => 'string'],
                 'language' => ['type' => 'string'],
                 'roles' => ['type' => 'array', 'items' => ['type' => 'string']],
-                'oauthLogin' => ['type' => 'boolean'],
-                'passwordSet' => ['type' => 'boolean'],
             ])
             ->assertResponseMatches([
                 'id' => $user->getId(),
@@ -189,8 +174,6 @@ class UserApiTest extends ApiTestCase
                 'email' => $user->getEmail(),
                 'language' => \sprintf('/api/languages/%s', $user->getLanguage()->value),
                 'roles' => $user->getRoles(),
-                'oauthLogin' => $user->isOauthLogin(),
-                'passwordSet' => $user->isPasswordSet(),
             ])
         ;
     }
@@ -232,7 +215,6 @@ class UserApiTest extends ApiTestCase
 
         // Thanks to the new autorefresh we can't do nice stuff as before...
         $oldUsername = $user->getUsername();
-        $oldPassword = $user->getPassword();
         $oldRoles = $user->getRoles();
 
         $this->browser()->actingAs(UserFactory::new()->admin()->create())
@@ -241,7 +223,6 @@ class UserApiTest extends ApiTestCase
                 'json' => [
                     'username' => 'new_username',
                     'email' => 'newemail@ambientrpg.dev',
-                    'password' => 'new_password',
                     'language' => '/api/languages/fr_FR',
                     'roles' => ['ROLE_ADMIN'],
                 ],
@@ -253,8 +234,6 @@ class UserApiTest extends ApiTestCase
                 'email' => ['type' => 'string'],
                 'language' => ['type' => 'string'],
                 'roles' => ['type' => 'array', 'items' => ['type' => 'string']],
-                'oauthLogin' => ['type' => 'boolean'],
-                'passwordSet' => ['type' => 'boolean'],
             ])
             ->assertResponseMatches([
                 'id' => $user->getId(),
@@ -262,13 +241,8 @@ class UserApiTest extends ApiTestCase
                 'email' => 'newemail@ambientrpg.dev',
                 'language' => \sprintf('/api/languages/%s', Language::FRENCH->value),
                 'roles' => $oldRoles,
-                'oauthLogin' => $user->isOauthLogin(),
-                'passwordSet' => $user->isPasswordSet(),
             ])
         ;
-
-        // Password should not be change
-        self::assertEquals($oldPassword, $user->getPassword());
     }
 
     #[Test]

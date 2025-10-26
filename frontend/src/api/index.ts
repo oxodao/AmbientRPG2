@@ -10,7 +10,7 @@ export class SDK {
 	public users: Users;
 
 	constructor() {
-		this.auth = new Auth(this);
+		this.auth = new Auth();
 		this.users = new Users(this);
 	}
 

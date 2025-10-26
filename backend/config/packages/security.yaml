@@ -13,8 +13,8 @@ security:
             security: false
 
         docs:
-            pattern: ^/api/(docs|forgotten_password_requests|_health)
-            security: false  # @TODO: Find a way to protect the docs in prod
+            pattern: ^/api/(docs|_health)
+            security: false
 
         login_refresh:
             pattern: ^/api/login_refresh
@@ -41,12 +41,12 @@ security:
             jwt: ~
 
     role_hierarchy:
-        ROLE_ADMIN:       ROLE_USER
+        ROLE_ADMIN: ROLE_DM
+        ROLE_DM: ROLE_USER
 
     access_control:
         - { path: ^/api/_health, roles: PUBLIC_ACCESS }
         - { path: ^/api/login, roles: PUBLIC_ACCESS }
-        - { path: ^/api/forgotten_password_requests, roles: PUBLIC_ACCESS }
         - { path: ^/api, roles: ROLE_USER }
 
 when@test:

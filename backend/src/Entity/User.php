@@ -14,7 +14,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Oxodao\QneOAuthBundle\Behavior\Impl\OAuthUserTrait;
 use Oxodao\QneOAuthBundle\Behavior\OAuthUserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
@@ -41,7 +40,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[UniqueEntity(fields: ['email'], message: 'Email already taken')]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: 'app_users')]
-class User implements UserInterface, PasswordAuthenticatedUserInterface, OAuthUserInterface
+class User implements UserInterface, OAuthUserInterface
 {
     use OAuthUserTrait;
 
@@ -60,10 +59,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, OAuthUs
         ...UserApiConfig::_VIEW,
     ])]
     private string $username;
-
-    // Nullable to allow OAuth users without password
-    #[ORM\Column(type: Types::STRING, length: 512, nullable: true)]
-    private ?string $password = null;
 
     #[ORM\Column(type: Types::STRING, length: 255, unique: true)]
     #[Assert\NotBlank(message: 'not_blank')]
@@ -123,18 +118,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, OAuthUs
         return $this;
     }
 
-    public function getPassword(): ?string
-    {
-        return $this->password;
-    }
-
-    public function setPassword(?string $password): static
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
     public function getLanguage(): Language
     {
         return $this->language;
@@ -185,17 +168,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, OAuthUs
         \assert(isset($this->username) && '' !== $this->username);
 
         return $this->username;
-    }
-
-    #[Groups([UserApiConfig::GET])]
-    public function isOauthLogin(): bool
-    {
-        return null !== $this->oauthUserId;
-    }
-
-    #[Groups([UserApiConfig::GET])]
-    public function isPasswordSet(): bool
-    {
-        return null !== $this->password;
     }
 }

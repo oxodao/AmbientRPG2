@@ -5,9 +5,7 @@ framework:
                 dsn: '%env(REDIS_DSN)%'
 
         routing:
-            'App\Message\EmailUpdatedNotification': 'emails'
-            'App\Message\ForgottenPasswordNotification': 'emails'
-            'App\Message\PasswordUpdatedNotification': 'emails'
+            # 'App\Message\EmailUpdatedNotification': 'emails'
 
 when@test:
     framework:

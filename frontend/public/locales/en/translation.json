@@ -36,7 +36,7 @@
 		},
 		"oauth_login_failed": {
 			"title": "Login failed",
-			"message": "Could not login using Keycloak. Please try again or contact your administrator."
+			"message": "Could not login using Overflow. Please try again or contact your administrator."
 		},
 		"404": {
 			"title": "Page not found",
@@ -53,8 +53,9 @@
 	},
 	"login": {
 		"title": "Login",
-		"invalid_credentials": "Invalid username or password",
-		"oauth_login": "Login with Keycloak"
+		"room_id": "Room ID",
+		"join_room": "Join",
+		"oauth_login": "Login with Overflow"
 	},
 	"reset_password": {
 		"title": "Forgot your password?",
@@ -72,7 +73,7 @@
 	},
 	"account": {
 		"my_profile": "My Profile",
-		"locked_oauth": "Your profile is managed by Keycloak and cannot be edited here.",
+		"locked_oauth": "Your profile is managed by Overflow and cannot be edited here.",
 		"roles": "Roles",
 		"mercure": {
 			"title": "Real-time updates tester",
