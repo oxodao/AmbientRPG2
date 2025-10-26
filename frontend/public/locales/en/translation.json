@@ -1,0 +1,88 @@
+{
+	"generic": {
+		"username": "Username",
+		"email": "Email",
+		"password": "Password",
+		"date": "Date",
+		"id": "ID",
+		"loading": "Loading...",
+		"search": "Search...",
+		"clear_search": "Clear search",
+		"no_more_results": "You have reached the end of the list",
+		"filters": "Filters",
+		"no_results": "No results found",
+		"cancel": "Cancel",
+		"save": "Save",
+		"create": "Create",
+		"changes_saved": "Changes saved successfully",
+		"created": "Created successfully",
+		"delete": "Delete",
+		"new": "New",
+		"add": "Add",
+		"edit": "Edit",
+		"go_back": "Go Back",
+		"logout": "Log out",
+		"yes": "Yes",
+		"no": "No",
+		"ok": "OK",
+		"select_an_option": "Select an option",
+		"language": "Language"
+	},
+	"errors": {
+		"generic": {
+			"title": "An error occurred",
+			"message": "Please try again later or contact the support.",
+			"message_with_data": "Please try again later or contact the support: {{message}}"
+		},
+		"oauth_login_failed": {
+			"title": "Login failed",
+			"message": "Could not login using Keycloak. Please try again or contact your administrator."
+		},
+		"404": {
+			"title": "Page not found",
+			"message": "The page you are looking for has wandered off into space."
+		},
+		"429": {
+			"title": "Too many requests",
+			"message": "Please try again later."
+		},
+		"5xx": {
+			"title": "Server Error",
+			"message": "An error occurred on the server. Please try again later."
+		}
+	},
+	"login": {
+		"title": "Login",
+		"invalid_credentials": "Invalid username or password",
+		"oauth_login": "Login with Keycloak"
+	},
+	"reset_password": {
+		"title": "Forgot your password?",
+		"request_text": "Please enter your email address below. You will receive a link to create a new password.",
+		"request_button": "Request",
+		"mail_sent": "If an account with this email exists, a password reset link has been sent.",
+		"invalid_code": "This password reset link is invalid or has expired.",
+		"new_password": "New Password",
+		"confirm_password": "Confirm Password",
+		"passwords_not_matching": "Passwords do not match",
+		"password_updated": "Your password has been successfully updated. You can now login."
+	},
+	"home": {
+		"title": "Home"
+	},
+	"account": {
+		"my_profile": "My Profile",
+		"locked_oauth": "Your profile is managed by Keycloak and cannot be edited here.",
+		"roles": "Roles",
+		"mercure": {
+			"title": "Real-time updates tester",
+			"no_results": "No updates received yet.",
+			"run_command": "Run the following command:"
+		}
+	},
+	"settings": {
+		"title": "Settings",
+		"light_mode": "Colors: Light",
+		"dark_mode": "Colors: Dark"
+	}
+}

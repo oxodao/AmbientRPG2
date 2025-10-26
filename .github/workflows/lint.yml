@@ -1,0 +1,55 @@
+name: lint
+
+on:
+  pull_request:
+
+jobs:
+  lint:
+    name: Linters and tests
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    env:
+      DOCKER_BUILDKIT: 1
+      COMPOSE_FILE: compose.yaml
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Prepare shared volumes
+        run: mkdir -p 00_DATA/data 00_DATA/var
+
+      - name: Build application image
+        run: docker compose build app
+
+      - name: Install PHP dependencies
+        run: docker compose run --rm --no-deps --entrypoint '' app composer install --no-interaction --prefer-dist
+
+      - name: Generate JWT keys
+        run: docker compose run --rm --no-deps --entrypoint '' app php bin/console lexik:jwt:generate-keypair --skip-if-exists
+
+      - name: PHP CS Fixer (dry-run)
+        run: docker compose run --rm --no-deps --entrypoint '' app php -d memory_limit=-1 vendor/bin/php-cs-fixer fix --dry-run --diff
+
+      - name: PHPStan
+        run: docker compose run --rm --no-deps --entrypoint '' app php -d memory_limit=-1 vendor/bin/phpstan analyse --no-progress
+
+      - name: Install frontend dependencies
+        run: docker compose run --rm --no-deps frontend npm ci
+
+      - name: Biome
+        run: docker compose run --rm --no-deps frontend npm run lint
+
+      - name: Start backing services for tests
+        run: docker compose up -d database redis
+
+      - name: Prepare test database schema
+        run: docker compose run --rm --entrypoint '' app php bin/console doctrine:migrations:migrate --env=test --no-interaction
+
+      - name: PHPUnit
+        run: docker compose run --rm --entrypoint '' app php bin/phpunit
+
+      - name: Shutdown stack
+        if: always()
+        run: docker compose down -v

@@ -1,0 +1,33 @@
+
+###> symfony/framework-bundle ###
+/backend/.env.local
+/backend/.env.local.php
+/backend/.env.*.local
+/backend/config/secrets/prod/prod.decrypt.private.php
+/backend/public/bundles/
+/backend/var/
+/backend/vendor/
+###< symfony/framework-bundle ###
+
+
+00_DATA/
+
+###> phpstan/phpstan ###
+phpstan.neon
+###< phpstan/phpstan ###
+
+###> phpunit/phpunit ###
+/backend/phpunit.xml
+/backend/.phpunit.cache/
+###< phpunit/phpunit ###
+
+###> friendsofphp/php-cs-fixer ###
+/backend/.php-cs-fixer.php
+/backend/.php-cs-fixer.cache
+###< friendsofphp/php-cs-fixer ###
+
+###> lexik/jwt-authentication-bundle ###
+/backend/config/jwt/*.pem
+###< lexik/jwt-authentication-bundle ###
+
+/contrib/00_TEST

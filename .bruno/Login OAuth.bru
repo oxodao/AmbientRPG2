@@ -1,0 +1,33 @@
+meta {
+  name: Login OAuth
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{base_url}}/login_oauth
+  body: json
+  auth: inherit
+}
+
+headers {
+  Content-Type: application/ld+json
+}
+
+body:json {
+  {
+    "code": "{{oauth_code}}"
+  }
+}
+
+script:post-response {
+  const token = res.body.token;
+  const refresh_token = res.body.refresh_token;
+  
+  bru.setEnvVar('token', token);
+  bru.setEnvVar('refresh_token', refresh_token);
+}
+
+settings {
+  encodeUrl: true
+}

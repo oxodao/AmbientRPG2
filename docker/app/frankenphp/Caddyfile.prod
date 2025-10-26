@@ -1,0 +1,68 @@
+{
+	skip_install_trust
+
+	{$CADDY_GLOBAL_OPTIONS}
+
+	frankenphp {
+		{$FRANKENPHP_CONFIG}
+
+		worker {
+			file ./public/index.php
+			env APP_RUNTIME Runtime\FrankenPhpSymfony\Runtime
+			{$FRANKENPHP_WORKER_CONFIG}
+		}
+	}
+}
+
+{$CADDY_EXTRA_CONFIG}
+
+:80 {
+	log {
+		{$CADDY_SERVER_LOG_OPTIONS}
+
+		# Redact the authorization query parameter that can be set by Mercure
+		format filter {
+			request>uri query {
+				replace authorization REDACTED
+			}
+		}
+	}
+
+	root /app/public
+	encode zstd br gzip
+
+    handle /.well-known/mercure* {
+        mercure {
+            publisher_jwt {env.MERCURE_PUBLISHER_JWT_KEY} HS256
+            subscriber_jwt {env.MERCURE_SUBSCRIBER_JWT_KEY} RS256
+            subscriptions
+
+            {$MERCURE_EXTRA_DIRECTIVES}
+        }
+    }
+
+	vulcain
+
+	{$CADDY_SERVER_EXTRA_DIRECTIVES}
+
+	# Disable Topics tracking if not enabled explicitly: https://github.com/jkarlin/topics
+	header ?Permissions-Policy "browsing-topics=()"
+
+    encode zstd br gzip
+
+    handle /api/* {
+		root * /app/public
+		php_server
+	}
+
+    handle /bundles/* {
+		root * /app/public
+        file_server
+	}
+
+    handle * {
+        root * /frontend
+        try_files {path} /index.html
+        file_server
+    }
+}

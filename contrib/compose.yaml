@@ -1,0 +1,60 @@
+services:
+  database:
+    image: 'postgres:18-alpine'
+    restart: 'unless-stopped'
+    environment:
+      POSTGRES_DB: 'my_project'
+      POSTGRES_USER: 'my_project'
+      POSTGRES_PASSWORD: 'my_project'
+    volumes:
+      - './db_data:/var/lib/postgresql/18/docker'
+    healthcheck:
+      test: [ 'CMD', 'pg_isready', '-d my_project', '-U my_project' ]
+      timeout: '5s'
+      start_period: '25s'
+      retries: 5
+
+  redis:
+    image: 'redis:8-alpine'
+    restart: 'unless-stopped'
+    healthcheck:
+      test: [ 'CMD', 'redis-cli', '--raw', 'incr', 'ping' ]
+      timeout: '5s'
+      start_period: '10s'
+      retries: 5
+
+  app:
+    image: 'ghcr.io/my_name/my_project:0.1.0'
+    restart: 'unless-stopped'
+    command: 'main'
+    tty: true
+    env_file: './.env'
+    volumes:
+      - './jwt_keys:/app/config/jwt'
+      - './data:/app/var'
+    ports:
+      - '127.0.0.1:${APP_PORT:-8049}:80'
+    depends_on:
+      database:
+        condition: 'service_healthy'
+      redis:
+        condition: 'service_healthy'
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost/api/_health']
+      interval: '30s'
+      timeout: '5s'
+      retries: 3
+      start_period: "20s"
+
+  worker_emails:
+    image: 'ghcr.io/my_name/my_project:0.1.0'
+    restart: 'unless-stopped'
+    command: ['consumer', 'emails']
+    tty: true
+    env_file: './.env'
+    volumes:
+      - './jwt_keys:/app/config/jwt'
+      - './data:/app/var'
+    depends_on:
+      app:
+        condition: 'service_healthy'

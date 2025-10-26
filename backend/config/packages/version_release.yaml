@@ -1,0 +1,6 @@
+# Do not touch this file
+# It will be auto-populated by the prod dockerfile & the release workflow
+
+parameters:
+    APP_VERSION: 'INDEV'
+    APP_COMMIT: 'INDEV'

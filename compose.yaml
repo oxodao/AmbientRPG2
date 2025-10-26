@@ -1,0 +1,95 @@
+---
+services:
+  app:
+    image: 'my_project'
+    build:
+      context: '.'
+      dockerfile: './docker/app/Dockerfile'
+      target: 'frankenphp_dev'
+    tty: true
+    restart: 'unless-stopped'
+    environment:
+      SERVER_NAME: 'localhost, app:80, php:80'
+      PHP_IDE_CONFIG: 'serverName=my_project'
+      MERCURE_PUBLISHER_JWT_KEY: '!ChangeThisMercureHubJWTSecretKey!'
+      MERCURE_EXTRA_DIRECTIVES: 'demo'
+    volumes:
+      - 'caddy_data:/data'
+      - 'caddy_config:/config'
+      - './backend:/app'
+      - './00_DATA/var:/app/var'
+      - './docker/app/frankenphp/Caddyfile.dev:/etc/frankenphp/Caddyfile:ro'
+      - './docker/app/frankenphp/conf.d/20-app.dev.ini:/usr/local/etc/php/app.conf.d/20-app.dev.ini:ro'
+    ports:
+      - '80:80'
+      - '443:443'
+    depends_on:
+      database:
+        condition: 'service_healthy'
+      redis:
+        condition: 'service_healthy'
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+
+  frontend:
+    image: 'node:25'
+    tty: true
+    restart: 'unless-stopped'
+    working_dir: '/app'
+    command: [ 'bash', '-c', '[ ! -d node_modules ] && npm install; npm run dev' ]
+    volumes:
+      - './frontend:/app'
+
+  database:
+    image: 'postgres:18'
+    environment:
+      POSTGRES_DB: 'my_project'
+      POSTGRES_USER: 'my_project'
+      POSTGRES_PASSWORD: 'my_project'
+    volumes:
+      - './00_DATA/data:/var/lib/postgresql/18/docker:rw'
+      - './docker/db/init_scripts:/docker-entrypoint-initdb.d:ro'
+    ports:
+      - '5432:5432'
+    healthcheck:
+      test: [ 'CMD', 'pg_isready', '-d', 'my_project', '-U', 'my_project' ]
+      start_period: '30s'
+      timeout: '5s'
+      retries: 5
+
+  mailer:
+    image: 'axllent/mailpit'
+    ports:
+      - "8025:8025"
+    environment:
+      MP_SMTP_AUTH_ACCEPT_ANY: 1
+      MP_SMTP_AUTH_ALLOW_INSECURE: 1
+
+  redis:
+    image: 'redis:8'
+    ports:
+      - '6379:6379'
+    healthcheck:
+      test: [ 'CMD', 'redis-cli', 'ping' ]
+      interval: '10s'
+      timeout: '3s'
+      retries: 3
+
+  worker_emails:
+    image: 'my_project'
+    build:
+      context: '.'
+      dockerfile: './docker/app/Dockerfile'
+      target: 'frankenphp_dev'
+    restart: 'unless-stopped'
+    command: ['bin/console', 'messenger:consume', 'emails', '-vvv']
+    volumes:
+      - './backend:/app'
+      - './00_DATA/var:/app/var'
+    depends_on:
+      app:
+        condition: 'service_healthy'
+
+volumes:
+  caddy_data:
+  caddy_config:

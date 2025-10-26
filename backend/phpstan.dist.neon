@@ -1,0 +1,14 @@
+parameters:
+    level: 8
+    errorFormat: ticketswap
+    treatPhpDocTypesAsCertain: false
+    editorUrl: 'phpstorm://open?file=%%file%%&line=%%line%%'
+    paths:
+        - bin/
+        - config/
+        - public/
+        - src/
+        - tests/
+
+    ignoreErrors:
+        - identifier: trait.unused

@@ -1,0 +1,14 @@
+services:
+    kc_role_parser:
+        class: Oxodao\QneOAuthBundle\Service\TokenRoleParser\KeycloakTokenRoleParser
+        arguments:
+            $kcAppName: 'my_project'
+
+qne_oauth:
+    url: '%env(OAUTH_BASE_URL)%'
+    client_id: '%env(OAUTH_CLIENT_ID)%'
+    client_secret: '%env(OAUTH_CLIENT_SECRET)%'
+    redirect_url: '%env(DEFAULT_URI)%/oauth-callback' # Your frontend URL that will in turn call your backend callback route
+    role_parser: 'kc_role_parser'
+    user_updater: 'App\Service\OAuthUserUpdater'
+    user_entity: 'App\Entity\User'

@@ -1,0 +1,9 @@
+qne_oauth_login_url:
+    path: '/api/login_oauth'
+    methods: [GET]
+    controller: Oxodao\QneOAuthBundle\Controller\QneOAuthController::getLoginUrl
+
+qne_oauth_callback:
+    path: '/api/login_oauth'
+    methods: [POST]
+    controller: Oxodao\QneOAuthBundle\Controller\QneOAuthController::loginCallback

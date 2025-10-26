@@ -1,0 +1,90 @@
+{
+	skip_install_trust
+
+	{$CADDY_GLOBAL_OPTIONS}
+
+	frankenphp {
+		{$FRANKENPHP_CONFIG}
+
+		# Disabled to let XDEBUG work properly
+		# This should be enabled in prod
+		# worker {
+		# 	file ./public/index.php
+		# 	env APP_RUNTIME Runtime\FrankenPhpSymfony\Runtime
+		# 	{$FRANKENPHP_WORKER_CONFIG}
+		# }
+	}
+}
+
+{$CADDY_EXTRA_CONFIG}
+
+http://{$SERVER_NAME:localhost}, https://{$SERVER_NAME:localhost} {
+	log {
+		{$CADDY_SERVER_LOG_OPTIONS}
+		# Redact the authorization query parameter that can be set by Mercure
+		format filter {
+			request>uri query {
+				replace authorization REDACTED
+			}
+		}
+	}
+
+    # Small trick
+    # We want the browser (on the host) to be redirected automatically to https
+    # But inside the container, the app must still be able to call mercure
+    # through http.
+    # Since we are not in 127.0.0.1 on the host, it does work with this rule.
+	@http_not_local {
+		protocol http
+		not remote_ip 127.0.0.1 ::1
+	}
+	redir @http_not_local https://{host}{uri} permanent
+
+	encode zstd br gzip
+
+	mercure {
+		publisher_jwt {env.MERCURE_PUBLISHER_JWT_KEY} HS256
+		subscriber_jwt {env.MERCURE_SUBSCRIBER_JWT_KEY} RS256
+		anonymous
+		subscriptions
+		{$MERCURE_EXTRA_DIRECTIVES}
+	}
+
+	vulcain
+
+	{$CADDY_SERVER_EXTRA_DIRECTIVES}
+
+	# Disable Topics tracking if not enabled explicitly: https://github.com/jkarlin/topics
+	header ?Permissions-Policy "browsing-topics=()"
+
+	# Routes Symfony
+	handle /api* {
+		root * /app/public
+
+		try_files {path} /index.php
+
+		php
+		file_server
+	}
+
+	# Routes Symfony bundles assets
+	handle /bundles* {
+		root * /app/public
+		file_server
+	}
+
+	# Routes Symfony profiler
+	handle /_profiler* {
+		root * /app/public
+
+		try_files {path} /index.php
+
+		php
+		file_server
+	}
+
+	# All other routes goes to the frontend
+	handle {
+		reverse_proxy http://frontend:5173
+	}
+}

@@ -1,0 +1,88 @@
+{
+	"generic": {
+		"username": "Pseudo",
+		"email": "Email",
+		"password": "Mot de passe",
+		"date": "Date",
+		"id": "ID",
+		"loading": "Chargement...",
+		"search": "Rechercher...",
+		"clear_search": "Effacer la recherche",
+		"no_more_results": "Vous avez atteint la fin de la liste",
+		"filters": "Filtres",
+		"no_results": "Aucun résultat trouvé",
+		"cancel": "Annuler",
+		"save": "Enregistrer",
+		"create": "Créer",
+		"changes_saved": "Changements enregistrés avec succès",
+		"created": "Créé avec succès",
+		"delete": "Supprimer",
+		"new": "Nouveau",
+		"add": "Ajouter",
+		"edit": "Modifier",
+		"go_back": "Page précédente",
+		"logout": "Se déconnecter",
+		"yes": "Oui",
+		"no": "Non",
+		"ok": "OK",
+		"select_an_option": "Sélectionnez une option",
+		"language": "Langue"
+	},
+	"errors": {
+		"generic": {
+			"title": "Une erreur s'est produite",
+			"desc": "Merci de réessayer plus tard ou de contacter le support.",
+			"desc_with_message": "Une erreur est survenue: {{message}}"
+		},
+		"oauth_login_failed": {
+			"title": "Échec de la connexion",
+			"message": "Impossible de se connecter avec Keycloak. Merci de réessayer ou de contacter votre administrateur."
+		},
+		"404": {
+			"title": "Page non trouvée",
+			"message": "La page que vous recherchez s'est perdue dans l'espace."
+		},
+		"429": {
+			"title": "Trop de requêtes",
+			"message": "Merci de réessayer plus tard."
+		},
+		"5xx": {
+			"title": "Erreur serveur",
+			"message": "Une erreur est survenue sur le serveur. Merci de réessayer plus tard."
+		}
+	},
+	"login": {
+		"title": "Connexion",
+		"invalid_credentials": "Identifiants invalides",
+		"oauth_login": "Connexion avec Keycloak"
+	},
+	"reset_password": {
+		"title": "Vous avez oublié votre mot de passe ?",
+		"request_text": "Veuillez entrer votre adresse e-mail ci-dessous. Vous recevrez un lien pour créer un nouveau mot de passe.",
+		"request_button": "Demander",
+		"mail_sent": "Si un compte avec cet e-mail existe, un lien de réinitialisation de mot de passe a été envoyé.",
+		"invalid_code": "Ce lien de réinitialisation de mot de passe est invalide ou a expiré.",
+		"new_password": "Nouveau mot de passe",
+		"confirm_password": "Confirmer le mot de passe",
+		"passwords_not_matching": "Les mots de passe ne correspondent pas",
+		"password_updated": "Votre mot de passe a été mis à jour avec succès. Vous pouvez maintenant vous connecter."
+	},
+	"home": {
+		"title": "Accueil"
+	},
+	"account": {
+		"my_profile": "Mon profil",
+		"locked_oauth": "Votre profil est géré par Keycloak et ne peut pas être modifié ici.",
+		"roles": "Rôles",
+		"mercure": {
+			"title": "Testeur de mises à jour en temps réel",
+			"no_results": "Aucune mise à jour reçue pour le moment.",
+			"run_command": "Exécutez la commande suivante:"
+		}
+	},
+	"settings": {
+		"title": "Paramètres",
+		"light_mode": "Couleurs: Claires",
+		"dark_mode": "Couleurs: Sombres"
+	}
+}

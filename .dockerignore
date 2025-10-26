@@ -1,0 +1,45 @@
+# Extra files
+.bruno/
+.github/
+
+**/.dockerignore
+**/.editorconfig
+**/.git/
+**/.gitattributes
+**/.gitignore
+**/.gitmodules
+**/compose.*.yaml
+**/compose.*.yml
+**/compose.yaml
+**/compose.yml
+**/Makefile
+backend/tests/
+backend/var/
+backend/vendor/
+contrib/
+frontend/.tanstack/
+frontend/node_modules/
+
+docker/app/Dockerfile
+
+# Generated files
+backend/public/bundles/
+
+# Useless files
+**/00_DATA/
+**/*.log
+**/*.md
+**/*.php~
+**/*.dist.php
+**/*.dist
+**/*.cache
+**/._*
+**/.DS_Store
+**/Thumbs.db
+
+## Security
+**/.env.*.local
+**/.env.local
+**/.env.local.php
+**/.env.test
+**/.env.dev

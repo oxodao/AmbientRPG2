@@ -1,0 +1,17 @@
+framework:
+    messenger:
+        transports:
+            emails:
+                dsn: '%env(REDIS_DSN)%'
+
+        routing:
+            'App\Message\EmailUpdatedNotification': 'emails'
+            'App\Message\ForgottenPasswordNotification': 'emails'
+            'App\Message\PasswordUpdatedNotification': 'emails'
+
+when@test:
+    framework:
+        messenger:
+            transports:
+                emails: 'test://?support_delay_stamp=true'
+
