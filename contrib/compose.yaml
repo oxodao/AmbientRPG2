@@ -3,13 +3,13 @@ services:
     image: 'postgres:18-alpine'
     restart: 'unless-stopped'
     environment:
-      POSTGRES_DB: 'my_project'
-      POSTGRES_USER: 'my_project'
-      POSTGRES_PASSWORD: 'my_project'
+      POSTGRES_DB: 'ambientrpg'
+      POSTGRES_USER: 'ambientrpg'
+      POSTGRES_PASSWORD: 'ambientrpg'
     volumes:
       - './db_data:/var/lib/postgresql/18/docker'
     healthcheck:
-      test: [ 'CMD', 'pg_isready', '-d my_project', '-U my_project' ]
+      test: [ 'CMD', 'pg_isready', '-d ambientrpg', '-U ambientrpg' ]
       timeout: '5s'
       start_period: '25s'
       retries: 5
@@ -24,7 +24,7 @@ services:
       retries: 5
 
   app:
-    image: 'ghcr.io/my_name/my_project:0.1.0'
+    image: 'ghcr.io/oxodao/ambientrpg:0.1.0'
     restart: 'unless-stopped'
     command: 'main'
     tty: true
@@ -47,7 +47,7 @@ services:
       start_period: "20s"
 
   worker_emails:
-    image: 'ghcr.io/my_name/my_project:0.1.0'
+    image: 'ghcr.io/oxodao/ambientrpg:0.1.0'
     restart: 'unless-stopped'
     command: ['consumer', 'emails']
     tty: true

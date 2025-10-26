@@ -1,7 +1,7 @@
 ---
 services:
   app:
-    image: 'my_project'
+    image: 'ambientrpg'
     build:
       context: '.'
       dockerfile: './docker/app/Dockerfile'
@@ -10,7 +10,7 @@ services:
     restart: 'unless-stopped'
     environment:
       SERVER_NAME: 'localhost, app:80, php:80'
-      PHP_IDE_CONFIG: 'serverName=my_project'
+      PHP_IDE_CONFIG: 'serverName=ambientrpg'
       MERCURE_PUBLISHER_JWT_KEY: '!ChangeThisMercureHubJWTSecretKey!'
       MERCURE_EXTRA_DIRECTIVES: 'demo'
     volumes:
@@ -43,16 +43,16 @@ services:
   database:
     image: 'postgres:18'
     environment:
-      POSTGRES_DB: 'my_project'
-      POSTGRES_USER: 'my_project'
-      POSTGRES_PASSWORD: 'my_project'
+      POSTGRES_DB: 'ambientrpg'
+      POSTGRES_USER: 'ambientrpg'
+      POSTGRES_PASSWORD: 'ambientrpg'
     volumes:
       - './00_DATA/data:/var/lib/postgresql/18/docker:rw'
       - './docker/db/init_scripts:/docker-entrypoint-initdb.d:ro'
     ports:
       - '5432:5432'
     healthcheck:
-      test: [ 'CMD', 'pg_isready', '-d', 'my_project', '-U', 'my_project' ]
+      test: [ 'CMD', 'pg_isready', '-d', 'ambientrpg', '-U', 'ambientrpg' ]
       start_period: '30s'
       timeout: '5s'
       retries: 5
@@ -76,7 +76,7 @@ services:
       retries: 3
 
   worker_emails:
-    image: 'my_project'
+    image: 'ambientrpg'
     build:
       context: '.'
       dockerfile: './docker/app/Dockerfile'

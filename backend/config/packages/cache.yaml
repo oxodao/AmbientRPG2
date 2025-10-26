@@ -1,6 +1,6 @@
 framework:
     cache:
-        prefix_seed: my_project_cache
+        prefix_seed: ambientrpg_cache
         app: cache.adapter.redis
         default_redis_provider: '%env(REDIS_DSN)%'
 

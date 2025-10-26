@@ -1,1 +1,1 @@
-CREATE DATABASE my_project_test;
+CREATE DATABASE ambientrpg_test;

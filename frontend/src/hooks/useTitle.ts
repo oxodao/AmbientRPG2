@@ -30,7 +30,7 @@ function useTitle(title: string, options: UseTitleOptions = DEFAULT_USE_TITLE_OP
 }
 
 export function useAppTitle(title: string) {
-	useTitle(`${title} | MY_PROJECT`);
+	useTitle(`${title} | AmbientRPG`);
 }
 
 export default typeof document !== 'undefined' ? useTitle : () => {};

@@ -92,7 +92,7 @@ class UserApiTest extends ApiTestCase
     {
         /** @var User $user */
         $user = $this->getFactory()->with([
-            'email' => 'oldemail@myproject.dev',
+            'email' => 'oldemail@ambientrpg.dev',
             'language' => Language::AMERICAN_ENGLISH,
         ])->create();
 
@@ -106,7 +106,7 @@ class UserApiTest extends ApiTestCase
                 'headers' => ['Content-Type' => 'application/merge-patch+json'],
                 'json' => [
                     'username' => 'new_username',
-                    'email' => 'newemail@myproject.dev',
+                    'email' => 'newemail@ambientrpg.dev',
                     'password' => 'new_password',
                     'language' => '/api/languages/fr_FR',
                     'roles' => ['ROLE_ADMIN'],
@@ -125,7 +125,7 @@ class UserApiTest extends ApiTestCase
             ->assertResponseMatches([
                 'id' => $user->getId(),
                 'username' => $oldUsername,
-                'email' => 'newemail@myproject.dev',
+                'email' => 'newemail@ambientrpg.dev',
                 'language' => \sprintf('/api/languages/%s', Language::FRENCH->value),
                 'roles' => $oldRoles,
                 'oauthLogin' => $user->isOauthLogin(),
@@ -140,20 +140,20 @@ class UserApiTest extends ApiTestCase
     #[Test]
     public function edit_own_duplicate_email(): void
     {
-        $this->getFactory()->with(['email' => 'email@myproject.dev'])->create();
+        $this->getFactory()->with(['email' => 'email@ambientrpg.dev'])->create();
 
         /** @var User $user */
         $user = $this->getFactory()->with([
-            'email' => 'some.email@myproject.dev',
+            'email' => 'some.email@ambientrpg.dev',
             'language' => Language::AMERICAN_ENGLISH,
         ])->create();
 
-        $user->setEmail('email@myproject.dev');
+        $user->setEmail('email@ambientrpg.dev');
 
         $this->browser()->actingAs($user)
             ->patch(\sprintf('%s/%s', $this->getBaseUrl(), $user->getId()), [
                 'headers' => ['Content-Type' => 'application/merge-patch+json'],
-                'json' => ['email' => 'email@myproject.dev'],
+                'json' => ['email' => 'email@ambientrpg.dev'],
             ])
             ->assertStatus(422)
             ->assertValidationError([
@@ -226,7 +226,7 @@ class UserApiTest extends ApiTestCase
     {
         /** @var User $user */
         $user = $this->getFactory()->with([
-            'email' => 'oldemail@myproject.dev',
+            'email' => 'oldemail@ambientrpg.dev',
             'language' => Language::AMERICAN_ENGLISH,
         ])->create();
 
@@ -240,7 +240,7 @@ class UserApiTest extends ApiTestCase
                 'headers' => ['Content-Type' => 'application/merge-patch+json'],
                 'json' => [
                     'username' => 'new_username',
-                    'email' => 'newemail@myproject.dev',
+                    'email' => 'newemail@ambientrpg.dev',
                     'password' => 'new_password',
                     'language' => '/api/languages/fr_FR',
                     'roles' => ['ROLE_ADMIN'],
@@ -259,7 +259,7 @@ class UserApiTest extends ApiTestCase
             ->assertResponseMatches([
                 'id' => $user->getId(),
                 'username' => $oldUsername,
-                'email' => 'newemail@myproject.dev',
+                'email' => 'newemail@ambientrpg.dev',
                 'language' => \sprintf('/api/languages/%s', Language::FRENCH->value),
                 'roles' => $oldRoles,
                 'oauthLogin' => $user->isOauthLogin(),
@@ -274,20 +274,20 @@ class UserApiTest extends ApiTestCase
     #[Test]
     public function admin_edit_duplicate_email(): void
     {
-        $this->getFactory()->with(['email' => 'email@myproject.dev'])->create();
+        $this->getFactory()->with(['email' => 'email@ambientrpg.dev'])->create();
 
         /** @var User $user */
         $user = $this->getFactory()->with([
-            'email' => 'some.email@myproject.dev',
+            'email' => 'some.email@ambientrpg.dev',
             'language' => Language::AMERICAN_ENGLISH,
         ])->create();
 
-        $user->setEmail('email@myproject.dev');
+        $user->setEmail('email@ambientrpg.dev');
 
         $this->browser()->actingAs(UserFactory::new()->admin()->create())
             ->patch(\sprintf('%s/%s', $this->getBaseUrl(), $user->getId()), [
                 'headers' => ['Content-Type' => 'application/merge-patch+json'],
-                'json' => ['email' => 'email@myproject.dev'],
+                'json' => ['email' => 'email@ambientrpg.dev'],
             ])
             ->assertStatus(422)
             ->assertValidationError(['Email already taken'])

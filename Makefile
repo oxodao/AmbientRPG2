@@ -38,4 +38,4 @@ test:
 
 build-release:
 	@rm -rf backend/config/jwt
-	@docker build --no-cache --file ./docker/app/Dockerfile --build-arg MY_PROJECT_VERSION=$(VERSION) --build-arg MY_PROJECT_COMMIT=$(COMMIT) --target frankenphp_prod --tag ghcr.io/my_name/my_project:0.1.0 .
+	@docker build --no-cache --file ./docker/app/Dockerfile --build-arg AMBIENTRPG_VERSION=$(VERSION) --build-arg AMBIENTRPG_COMMIT=$(COMMIT) --target frankenphp_prod --tag ghcr.io/oxodao/ambientrpg:0.1.0 .

@@ -50,7 +50,7 @@ The `make reset-db` will reset the database and load some fixtures.
 
 If you need to access the database directly, you can use the following command:
 ```bash
-docker compose exec db psql -U my_project -d my_project
+docker compose exec db psql -U ambientrpg -d ambientrpg
 ```
 
 ## Other stuff

@@ -39,7 +39,7 @@ jobs:
             ${{ env.IMAGE_NAME }}:${{ github.ref_name }}
             ${{ env.IMAGE_NAME }}:latest
           build-args: |
-            MY_PROJECT_VERSION=${{ github.ref_name }}
-            MY_PROJECT_COMMIT=${{ github.sha }}
+            AMBIENTRPG_VERSION=${{ github.ref_name }}
+            AMBIENTRPG_COMMIT=${{ github.sha }}
           cache-from: type=gha,scope=release-image
           cache-to: type=gha,scope=release-image,mode=max

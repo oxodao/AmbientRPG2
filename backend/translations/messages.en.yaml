@@ -12,9 +12,9 @@ emails:
     password_updated:
         subject: 'Password updated'
         text1: 'Your password has been updated'
-        warning: 'If you did not change your password, please reach immediately to your MY_PROJECT administrator to secure your account !'
+        warning: 'If you did not change your password, please reach immediately to your AmbientRPG administrator to secure your account !'
 
     email_updated:
         subject: 'Email updated'
         text1: 'You just updated your email address to %new_email%, the old one will no longer be used.'
-        warning: 'If you did not change your email, please reach immediately to your MY_PROJECT administrator to secure your account !'
+        warning: 'If you did not change your email, please reach immediately to your AmbientRPG administrator to secure your account !'

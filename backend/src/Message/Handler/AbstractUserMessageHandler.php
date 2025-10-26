@@ -39,7 +39,7 @@ abstract class AbstractUserMessageHandler
 
         return new TemplatedEmail()
             ->to($message->getEmail())
-            ->subject(\sprintf('[MY_PROJECT] %s', $this->trans('subject', $ctx)))
+            ->subject(\sprintf('[AmbientRPG] %s', $this->trans('subject', $ctx)))
             ->htmlTemplate(\sprintf('emails/%s.html.twig', $this->getTemplate($message)))
             ->locale($message->getLanguage())
             ->context($ctx)

@@ -81,8 +81,8 @@ RUN set -eux; \
 
 # Setting the version infos
 RUN sed -i \
-    -e "s/APP_VERSION: 'indev'/APP_VERSION: '${MY_PROJECT_VERSION}'/" \
-    -e "s/APP_COMMIT: 'INDEV'/APP_COMMIT: '${MY_PROJECT_COMMIT}'/" \
+    -e "s/APP_VERSION: 'indev'/APP_VERSION: '${AMBIENTRPG_VERSION}'/" \
+    -e "s/APP_COMMIT: 'INDEV'/APP_COMMIT: '${AMBIENTRPG_COMMIT}'/" \
     /app/config/packages/version_release.yaml
 
 COPY --from=frontend /app/dist/ /frontend

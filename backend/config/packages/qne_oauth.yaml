@@ -2,7 +2,7 @@ services:
     kc_role_parser:
         class: Oxodao\QneOAuthBundle\Service\TokenRoleParser\KeycloakTokenRoleParser
         arguments:
-            $kcAppName: 'my_project'
+            $kcAppName: 'ambientrpg'
 
 qne_oauth:
     url: '%env(OAUTH_BASE_URL)%'
