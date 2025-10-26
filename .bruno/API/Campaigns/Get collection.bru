@@ -1,0 +1,19 @@
+meta {
+  name: Get collection
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base_url}}/campaigns?mine=true
+  body: none
+  auth: inherit
+}
+
+params:query {
+  mine: true
+}
+
+settings {
+  encodeUrl: true
+}

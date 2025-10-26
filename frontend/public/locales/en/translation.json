@@ -57,19 +57,8 @@
 		"join_room": "Join",
 		"oauth_login": "Login with Overflow"
 	},
-	"reset_password": {
-		"title": "Forgot your password?",
-		"request_text": "Please enter your email address below. You will receive a link to create a new password.",
-		"request_button": "Request",
-		"mail_sent": "If an account with this email exists, a password reset link has been sent.",
-		"invalid_code": "This password reset link is invalid or has expired.",
-		"new_password": "New Password",
-		"confirm_password": "Confirm Password",
-		"passwords_not_matching": "Passwords do not match",
-		"password_updated": "Your password has been successfully updated. You can now login."
-	},
 	"home": {
-		"title": "Home"
+		"title": "My campaigns"
 	},
 	"account": {
 		"my_profile": "My Profile",

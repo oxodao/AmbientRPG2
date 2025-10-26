@@ -6,13 +6,9 @@ use App\Entity\User;
 use App\Enum\Language;
 use App\Factory\UserFactory;
 use App\Tests\ApiTestCase;
-use App\Tests\Helper\Trait\Forbidden\Unauthenticated\GetCollectionUnauthenticatedForbiddenTrait;
-use App\Tests\Helper\Trait\Forbidden\Unauthenticated\GetItemUnauthenticatedForbiddenTrait;
-use App\Tests\Helper\Trait\Forbidden\User\GetCollectionUserForbiddenTrait;
-use App\Tests\Helper\Trait\Forbidden\User\GetItemUserForbiddenTrait;
-use App\Tests\Helper\Trait\Forbidden\User\PatchUserForbiddenTrait;
-use App\Tests\Helper\Trait\NoEndpoint\DeleteNoEndpointTrait;
-use App\Tests\Helper\Trait\NoEndpoint\PostNoEndpointTrait;
+use App\Tests\Helper\Trait\Forbidden\Player as ForbiddenPlayer;
+use App\Tests\Helper\Trait\Forbidden\Unauthenticated as ForbiddenUnauthenticated;
+use App\Tests\Helper\Trait\NoEndpoint;
 use PHPUnit\Framework\Attributes\Test;
 use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
 
@@ -22,32 +18,33 @@ use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
 class UserApiTest extends ApiTestCase
 {
     /* User cannot edit other users */
-    /** @use PatchUserForbiddenTrait<User> */
-    use PatchUserForbiddenTrait;
+    /** @use ForbiddenPlayer\PatchTrait<User>
+     */
+    use ForbiddenPlayer\PatchTrait;
 
     /* We do not have an endpoint for create */
-    /** @use PostNoEndpointTrait<User> */
-    use PostNoEndpointTrait;
+    /** @use NoEndpoint\PostTrait<User> */
+    use NoEndpoint\PostTrait;
 
     /* We do not have an endpoint for delete */
-    /** @use DeleteNoEndpointTrait<User> */
-    use DeleteNoEndpointTrait;
+    /** @use NoEndpoint\DeleteTrait<User> */
+    use NoEndpoint\DeleteTrait;
 
     /* Unauthenticated users cannot view user details */
-    /** @use GetItemUnauthenticatedForbiddenTrait<User> */
-    use GetItemUnauthenticatedForbiddenTrait;
+    /** @use ForbiddenUnauthenticated\GetItemTrait<User> */
+    use ForbiddenUnauthenticated\GetItemTrait;
 
     /* Unauthenticated users cannot view the list of users */
-    /** @use GetCollectionUnauthenticatedForbiddenTrait<User> */
-    use GetCollectionUnauthenticatedForbiddenTrait;
+    /** @use ForbiddenUnauthenticated\GetCollectionTrait<User> */
+    use ForbiddenUnauthenticated\GetCollectionTrait;
 
     /* Users cannot view other users' details */
-    /** @use GetItemUserForbiddenTrait<User> */
-    use GetItemUserForbiddenTrait;
+    /** @use ForbiddenPlayer\GetItemTrait<User> */
+    use ForbiddenPlayer\GetItemTrait;
 
     /* User cannot view the list of users */
-    /** @use GetCollectionUserForbiddenTrait<User> */
-    use GetCollectionUserForbiddenTrait;
+    /** @use ForbiddenPlayer\GetCollectionTrait<User> */
+    use ForbiddenPlayer\GetCollectionTrait;
 
     // Once all those traits have passed, we just need to verify
     // - A user can get its own details

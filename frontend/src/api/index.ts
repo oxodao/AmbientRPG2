@@ -1,6 +1,7 @@
 import { useAuthStore } from '@/stores/auth';
 import type { Collection, EnumValue } from '../types';
 import { Auth } from './endpoints/auth';
+import Campaigns from './endpoints/campaigns';
 import Users from './endpoints/users';
 import { HttpError, HttpServerError, makeError, ProblemDetailsError } from './http_error';
 import { ValidationError } from './violations_error';
@@ -8,10 +9,12 @@ import { ValidationError } from './violations_error';
 export class SDK {
 	public auth: Auth;
 	public users: Users;
+	public campaigns: Campaigns;
 
 	constructor() {
 		this.auth = new Auth();
 		this.users = new Users(this);
+		this.campaigns = new Campaigns(this);
 	}
 
 	public async get<T>(endpoint: string, init?: RequestInit): Promise<T> {

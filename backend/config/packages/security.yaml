@@ -42,12 +42,12 @@ security:
 
     role_hierarchy:
         ROLE_ADMIN: ROLE_DM
-        ROLE_DM: ROLE_USER
+        ROLE_DM: ROLE_PLAYER
 
     access_control:
         - { path: ^/api/_health, roles: PUBLIC_ACCESS }
         - { path: ^/api/login, roles: PUBLIC_ACCESS }
-        - { path: ^/api, roles: ROLE_USER }
+        - { path: ^/api, roles: ROLE_PLAYER }
 
 when@test:
     security:

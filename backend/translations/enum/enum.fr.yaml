@@ -1,3 +1,9 @@
 language:
     en_US: Anglais américain
     fr_FR: Français
+
+game:
+    cyberpunk_red: "Cyberpunk RED"
+    fallout: "Fallout"
+    dnd: "Dungeons & Dragons"
+    generic: "Générique"

@@ -14,7 +14,7 @@ import { Spinner } from '../ui/spinner';
 type Props = {
 	enumName: string;
 	value: string | null;
-	onChange: (val: string | null) => void;
+	onChange?: (val: string | null) => void;
 	disabled?: boolean;
 	id?: string;
 	className?: string;
@@ -85,7 +85,7 @@ export default function EnumSelect({ enumName, value, onChange, className, ...fi
 					{values.data && (
 						<EnumValueList
 							setOpen={setOpen}
-							setSelectedValue={x => onChange(x?.['@id'] || null)}
+							setSelectedValue={x => onChange?.(x?.['@id'] || null)}
 							values={values.data}
 						/>
 					)}
@@ -106,7 +106,7 @@ export default function EnumSelect({ enumName, value, onChange, className, ...fi
 					{values.data && (
 						<EnumValueList
 							setOpen={setOpen}
-							setSelectedValue={x => onChange(x?.['@id'] || null)}
+							setSelectedValue={x => onChange?.(x?.['@id'] || null)}
 							values={values.data}
 						/>
 					)}

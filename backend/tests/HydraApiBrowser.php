@@ -310,6 +310,20 @@ class HydraApiBrowser extends KernelBrowser
     /**
      * @return array<mixed>
      */
+    public static function buildEnum(string $iriBase): array
+    {
+        return self::buildSchemaObject([
+            '@id' => self::buildSchemaIri($iriBase),
+            'id' => ['type' => 'string'],
+            'name' => ['type' => 'string'],
+            'value' => ['type' => 'string'],
+            'label' => ['type' => 'string'],
+        ]);
+    }
+
+    /**
+     * @return array<mixed>
+     */
     public static function buildSchemaIri(string $iriBase): array
     {
         return [

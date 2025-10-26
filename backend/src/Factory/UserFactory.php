@@ -17,13 +17,20 @@ class UserFactory extends PersistentObjectFactory
             'username' => self::faker()->userName(),
             'email' => self::faker()->unique()->safeEmail(),
             'language' => Language::AMERICAN_ENGLISH,
-            'roles' => ['ROLE_USER'],
+            'roles' => ['ROLE_PLAYER'],
         ];
     }
 
     public function withLanguage(Language $language): static
     {
         return $this->with(['language' => $language]);
+    }
+
+    public function dm(): self
+    {
+        return $this->with([
+            'roles' => ['ROLE_DM'],
+        ]);
     }
 
     public function admin(): self

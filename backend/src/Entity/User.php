@@ -9,6 +9,8 @@ use ApiPlatform\Metadata\Patch;
 use App\ApiConfig\UserApiConfig;
 use App\Enum\Language;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Oxodao\QneOAuthBundle\Behavior\Impl\OAuthUserTrait;
@@ -89,6 +91,17 @@ class User implements UserInterface, OAuthUserInterface
     ])]
     private array $roles = [];
 
+    /**
+     * @var Collection<int, Campaign>
+     */
+    #[ORM\OneToMany(targetEntity: Campaign::class, mappedBy: 'owner')]
+    private Collection $campaigns;
+
+    public function __construct()
+    {
+        $this->campaigns = new ArrayCollection();
+    }
+
     public function getId(): int
     {
         return $this->id;
@@ -135,8 +148,6 @@ class User implements UserInterface, OAuthUserInterface
      * we should not do this, having an account doesn't automatically say that you can use the app
      * e.g. OAuth users might have an account for other app but not be allowed this one.
      *
-     * Password-registered user should have the ROLE_USER assigned during registration.
-     *
      * @return array<string>
      */
     public function getRoles(): array
@@ -150,6 +161,40 @@ class User implements UserInterface, OAuthUserInterface
     public function setRoles(array $roles): static
     {
         $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Campaign>
+     */
+    public function getCampaigns(): Collection
+    {
+        return $this->campaigns;
+    }
+
+    /**
+     * @param array<Campaign>|Collection<int, Campaign> $campaigns
+     * @return $this
+     */
+    public function setCampaigns(array|Collection $campaigns): static
+    {
+        if (\is_array($campaigns)) {
+            $campaigns = new ArrayCollection($campaigns);
+        }
+
+        $this->campaigns = $campaigns;
+        \array_map(fn (Campaign $campaign) => $campaign->setOwner($this), $campaigns->toArray());
+
+        return $this;
+    }
+
+    public function addCampaign(Campaign $campaign): static
+    {
+        if (!$this->campaigns->contains($campaign)) {
+            $this->campaigns->add($campaign);
+            $campaign->setOwner($this);
+        }
 
         return $this;
     }
